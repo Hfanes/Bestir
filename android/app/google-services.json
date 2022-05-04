@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1001889841808",
+    "project_id": "bestir-b7f0b",
+    "storage_bucket": "bestir-b7f0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001889841808:android:183fe21fe72eb63916ce15",
+        "android_client_info": {
+          "package_name": "com.example.bestir"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1001889841808-8d3lou3iqvk9jc81jq9866dqigcr344c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdTMahtC51U8ZK9unGlnhsiCtEvYdgans"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1001889841808-8d3lou3iqvk9jc81jq9866dqigcr344c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
