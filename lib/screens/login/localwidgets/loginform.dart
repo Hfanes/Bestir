@@ -41,12 +41,13 @@ class _OurLoginFormState extends State<OurLoginForm> {
     return OurContainer(
         child: Column(
       children: <Widget>[
-        Padding(
+        const Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
           child: Text(
             "Log In",
             style: TextStyle(
-                color: Theme.of(context).secondaryHeaderColor,
+                color: Colors.black,
+                // color: Theme.of(context).secondaryHeaderColor,
                 fontSize: 25.0,
                 fontWeight: FontWeight.bold),
           ),
@@ -83,7 +84,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
           },
         ),
         TextButton(
-          child: const Text("Don´t have one?Sign UP"),
+          child: const Text("Don´t have one? Sign UP"),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
