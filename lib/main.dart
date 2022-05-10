@@ -1,3 +1,4 @@
+import 'package:bestir/screens/home/home.dart';
 import 'package:bestir/screens/login/login.dart';
 import 'package:bestir/screens/signup/signup.dart';
 import 'package:bestir/states/currentUser.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: OurTheme().buildTheme(),
-          home: OurLogin()),
+          home: HomeScreeen()),
     );
   }
 }
