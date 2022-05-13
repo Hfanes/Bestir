@@ -4,7 +4,7 @@ class OurTheme{
    Color _lightGreen = Color.fromARGB(255, 20, 20, 20);
    Color _lightGrey = Color.fromARGB(255, 50, 50, 50);
    Color _darkGrey = Color.fromARGB(255, 100, 100, 100);
-   Color _red = Color.fromARGB(255, 255, 0, 0);
+   Color  _red =  Color.fromARGB(255, 255, 0, 0);
 
 
   ThemeData buildTheme(){
