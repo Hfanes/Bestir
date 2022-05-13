@@ -1,39 +1,12 @@
+import 'package:bestir/screens/listProducts/listproducts.dart';
+import 'package:bestir/widgets/singleproduct.dart';
 import 'package:flutter/material.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 
 class HomeScreeen extends StatelessWidget {
 
 
-  Widget _bluidFeaturedProduct(String name, double price, String image) {
-    return Card(
-      child: Container(
-        height: 170,
-        width: 150,
-        color: Colors.white,
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 130,
-              width: 130,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  image: DecorationImage(image: AssetImage("assets/$name"))),
-            ),
-            Text(
-              "\$ $price",
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17,
-                  color: Colors.black),
-            ),
-            Text(
-              image,
-              style: const TextStyle(fontSize: 17, color: Colors.black),
-            )
-          ],
-        ),
-      ),
-    );
-  }
+
   
 Widget _buildCategoryProduct(String image) {
                       return CircleAvatar(
@@ -43,6 +16,8 @@ Widget _buildCategoryProduct(String image) {
                     );
 }
 
+
+
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   HomeScreeen({Key? key}) : super(key: key);
 
@@ -51,7 +26,9 @@ Widget _buildCategoryProduct(String image) {
     return Scaffold(
       backgroundColor: Colors.white,
         key: _key,
-        drawer: const Drawer(),
+        drawer: const Drawer(
+          
+        ),
         appBar: AppBar(
           
           title: const Text("Home Page",style: TextStyle(color:Colors.black, fontWeight: FontWeight.bold)),
@@ -69,11 +46,9 @@ Widget _buildCategoryProduct(String image) {
             },
           ),
           actions: <Widget>[
+            
             IconButton(
-                icon: const Icon(Icons.notifications_none, color: Colors.black),
-                onPressed: () {}),
-            IconButton(
-                icon: const Icon(Icons.send, color: Colors.black),
+                icon: const Icon(Icons.search, color: Colors.black),
                 onPressed: () {}),
           ],
         ),
@@ -86,63 +61,36 @@ Widget _buildCategoryProduct(String image) {
               Column(
                 children: <Widget>[
                   Container(
-                    height: 125,
+                 
                     color: Colors.white,
                     width: double.infinity,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        TextFormField(
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.search_outlined),
-                            hintText: "Search Something",
-                            border:OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30))
-                          ),
-                        ),
-                        ////////////////////
-                        Container(
-                          height:50,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: const <Widget>[
-                                  Text(
-                                    "Featured",
-                                    style: TextStyle(
-                                        fontSize: 18, fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    "See all",
-                                    style: TextStyle(
-                                        fontSize: 18, fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Row(
+               
+                  Column(
                     children: <Widget>[
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              _bluidFeaturedProduct("relogio.jpg", 40.0, "Relogio"),
-                              _bluidFeaturedProduct("camisola.jpg", 20.0, "Camisola")
-                            ],
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  Container(
+                          Container(
+                            height: 240,
+                            child: Carousel(
+                              autoplay: true,
+                              boxFit: BoxFit.fill,
+                              showIndicator: false,
+                              images: const [
+                                AssetImage("assets/ccalcas.jpg"),
+                                AssetImage("assets/csapatos.png"),
+                                AssetImage("assets/ctshirt.jpg"),
+                                AssetImage("assets/cchapeu.png"),
+                              ],
+
+                            )
+                              
+                            
+                          ),
+                           Container(
                     height: 60,    
                     color: Colors.white,            
                     child: Row(
@@ -152,9 +100,12 @@ Widget _buildCategoryProduct(String image) {
                          Text("Categories",
                          style: TextStyle(fontSize:17,fontWeight: FontWeight.bold),
                          ),
-                        Text("See all",
-                         style: TextStyle(fontSize:17,fontWeight: FontWeight.bold),
-                        ),
+                           Text(
+                                    "See All",
+                                    style: TextStyle(
+                                        fontSize: 17, fontWeight: FontWeight.bold),
+                                  ),
+                     
                     ],
                     ),
                   ),
@@ -170,6 +121,43 @@ Widget _buildCategoryProduct(String image) {
                       ],
                     ),
                   ),
+                  const SizedBox(
+                    height: 10,
+           
+                  
+                  ),
+                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children:  <Widget>[
+                                  const Text(
+                                    "Featured",
+                                    style: TextStyle(
+                                        fontSize: 18, fontWeight: FontWeight.bold),
+                                  ),
+                                   GestureDetector(
+                                     onTap: (){
+                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(ctx)=>ListProduct(name:"Featured"),),);
+                                     },
+                                     child:const  Text("View more",
+                                      style: TextStyle(
+                                          fontSize: 18, fontWeight: FontWeight.bold),
+                                                                     ),
+                                   ),
+                                ],
+                              ),
+                          Row(
+                            children: <Widget>[
+                              SingleProduct(image:"relogio" , price: 40, name: "relogio.jpg"),
+                              SingleProduct(image: "Camisola", price: 20, name: "camisola.jpg"),
+                             
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  ////////////////
+                 
                         Container(
                           height:50,
                           child: Column(
@@ -177,17 +165,24 @@ Widget _buildCategoryProduct(String image) {
                             children: <Widget>[
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: const <Widget>[
-                                  Text(
+                                children:   <Widget>[
+                                  const Text(
                                     "New Achives",
                                     style: TextStyle(
                                         fontSize: 18, fontWeight: FontWeight.bold),
                                   ),
-                                  Text(
-                                    "See all",
-                                    style: TextStyle(
-                                        fontSize: 18, fontWeight: FontWeight.bold),
-                                  ),
+                                 GestureDetector(
+                                   onTap: (){
+                                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(ctx)=>ListProduct(name:"New Achives"),
+                                     ),
+                                     );
+                                   },
+                                   child: const Text(
+                                     "View more",
+                                      style: TextStyle(
+                                          fontSize: 18, fontWeight: FontWeight.bold),
+                                    ),
+                                 ),
                                 ],
                               ),
                             ],
@@ -199,9 +194,9 @@ Widget _buildCategoryProduct(String image) {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Row(
-                            children: <Widget>[
-                              _bluidFeaturedProduct("boxers.png", 15.0, "Boxers"),
-                              _bluidFeaturedProduct("meias.png", 17.5, "Meias")
+                            children: <Widget>[  
+                              SingleProduct(image:"Boxers",price: 15.0, name:"boxers.png"),
+                              SingleProduct(image:"Meias", price:17.5,name: "meias.png")
                             ],
                           )
                         ],
@@ -210,11 +205,14 @@ Widget _buildCategoryProduct(String image) {
               ),
                       ],
                     ),
-            ],
+
           ),
-              ),
+
              
 
-        );
+             ]
+          )])
+             )
+              );
   }
 }
