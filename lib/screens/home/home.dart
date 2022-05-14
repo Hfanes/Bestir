@@ -1,13 +1,17 @@
-import 'package:bestir/screens/listProducts/listproducts.dart';
+import 'package:bestir/widgets/listproducts.dart';
 import 'package:bestir/widgets/singleproduct.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
-class HomeScreeen extends StatelessWidget {
+class HomeScreeen extends StatefulWidget {
 
+  HomeScreeen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreeen> createState() => _HomeScreeenState();
+}
 
-  
+class _HomeScreeenState extends State<HomeScreeen> {
 Widget _buildCategoryProduct(String image) {
                       return CircleAvatar(
                       maxRadius: 36,
@@ -16,21 +20,102 @@ Widget _buildCategoryProduct(String image) {
                     );
 }
 
+ bool homeColor=false;
 
+ bool cartColor=false;
+
+ bool aboutColor=false;
+
+ bool contactUsColor=false;
 
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-  HomeScreeen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
         key: _key,
-        drawer: const Drawer(
-          
+        drawer:  Drawer(
+          backgroundColor: Colors.white,
+          child: ListView(
+            children:  <Widget>[ 
+             const  UserAccountsDrawerHeader(
+                accountName: Text("UserTest",style: TextStyle(color: Colors.black),), 
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                ),
+                currentAccountPicture: CircleAvatar(
+                  backgroundImage: AssetImage("assets/logouser.png"),
+                ),
+                accountEmail: Text("usertest@gmail.com",style: TextStyle(color: Colors.black)),
+                ),
+                 ListTile(
+                   selected: homeColor,
+                  onTap: (){
+                   setState(() {
+                     homeColor=true;
+                       cartColor=false;
+                       aboutColor=false;
+                       contactUsColor=false;
+                   }); 
+                  },
+                  leading:const Icon(Icons.home),
+                  title:const Text("Home"),
+                ),
+                 ListTile(
+                   selected: cartColor,
+                  onTap: (){
+                    setState(() {
+                      cartColor=true;
+                       homeColor=false;
+                       aboutColor=false;
+                       contactUsColor=false;
+                    });
+                  },
+                  leading:const Icon(Icons.shopping_cart),
+                  title:const Text("Cart"),
+                ),
+                 ListTile(
+                   selected: aboutColor,
+                  onTap: (){
+                    setState(() {
+                      aboutColor=true;
+                       homeColor=false;
+                       cartColor=false;
+                       contactUsColor=false;
+                    });
+                  },
+                  leading:const Icon(Icons.info),
+                  title:const Text("About"),
+                ),
+                ListTile(
+                  selected: contactUsColor,
+                  onTap: (){
+                     setState(() {
+                       contactUsColor=true;
+                       homeColor=false;
+                       cartColor=false;
+                       aboutColor=false;
+                    });
+                  },
+                  leading: const Icon(Icons.phone),
+                  title: const Text("Contact us"),
+                ),
+                    ListTile(
+                  onTap: (){},
+                  leading: const Icon(Icons.exit_to_app),
+                  title: const Text("Logout"),
+                ),
+                
+
+            ],
+          ),
+
+
+
+
         ),
         appBar: AppBar(
-          
           title: const Text("Home Page",style: TextStyle(color:Colors.black, fontWeight: FontWeight.bold)),
           centerTitle: true,
           elevation: 0.0,
@@ -76,6 +161,7 @@ Widget _buildCategoryProduct(String image) {
                           Container(
                             height: 240,
                             child: Carousel(
+                              
                               autoplay: true,
                               boxFit: BoxFit.fill,
                               showIndicator: false,
