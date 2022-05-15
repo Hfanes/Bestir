@@ -1,3 +1,4 @@
+import 'package:bestir/widgets/detailscreen.dart';
 import 'package:bestir/widgets/listproducts.dart';
 import 'package:bestir/widgets/singleproduct.dart';
 import 'package:flutter/material.dart';
@@ -12,30 +13,16 @@ class HomeScreeen extends StatefulWidget {
 }
 
 class _HomeScreeenState extends State<HomeScreeen> {
-Widget _buildCategoryProduct(String image) {
+
+  Widget _buildCategoryProduct(String image) {
                       return CircleAvatar(
                       maxRadius: 36,
                        backgroundColor: const Color(0xff33dcfd ),
                        backgroundImage:AssetImage("assets/$image" ) ,
                     );
 }
-
- bool homeColor=false;
-
- bool cartColor=false;
-
- bool aboutColor=false;
-
- bool contactUsColor=false;
-
-  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-        key: _key,
-        drawer:  Drawer(
+  Widget _buildDrawer(){
+    return Drawer(
           backgroundColor: Colors.white,
           child: ListView(
             children:  <Widget>[ 
@@ -114,7 +101,76 @@ Widget _buildCategoryProduct(String image) {
 
 
 
-        ),
+        );
+  } 
+  Widget _buildImageSlider(){
+    return Container(
+                            height: 240,
+                            child: Carousel(
+                              autoplay: true,
+                              boxFit: BoxFit.fill,
+                              showIndicator: false,
+                              images: const [
+                                AssetImage("assets/ccalcas.jpg"),
+                                AssetImage("assets/csapatos.png"),
+                                AssetImage("assets/ctshirt.jpg"),
+                                AssetImage("assets/cchapeu.png"),
+                              ],
+                            ),  
+                          );
+  }
+  Widget _buildCategory(){
+    return Column(
+      children: <Widget>[
+               Container(
+                    height: 60,    
+                    color: Colors.white,            
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children:const  <Widget>[
+                         Text("Categories",
+                         style: TextStyle(fontSize:17,fontWeight: FontWeight.bold),
+                         ),
+                           Text("See All",
+                                    style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold),
+                                  ),
+                    ],
+                    ),
+                  ),
+                  Container(
+                    height: 60,
+                    child: Row(
+                      children: <Widget>[
+                       _buildCategoryProduct("CatSapatilha.png"),
+                           _buildCategoryProduct("CatSapatilha.png"),
+                                _buildCategoryProduct("CatSapatilha.png"),
+                                     _buildCategoryProduct("CatSapatilha.png"),
+                                          _buildCategoryProduct("CatSapatilha.png"),
+                      ],
+                    ),
+                  ),
+      ],
+    );
+  }
+
+
+ bool homeColor=false;
+
+ bool cartColor=false;
+
+ bool aboutColor=false;
+
+ bool contactUsColor=false;
+
+  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+        key: _key,
+          drawer: _buildDrawer(),
         appBar: AppBar(
           title: const Text("Home Page",style: TextStyle(color:Colors.black, fontWeight: FontWeight.bold)),
           centerTitle: true,
@@ -158,59 +214,10 @@ Widget _buildCategoryProduct(String image) {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Container(
-                            height: 240,
-                            child: Carousel(
-                              
-                              autoplay: true,
-                              boxFit: BoxFit.fill,
-                              showIndicator: false,
-                              images: const [
-                                AssetImage("assets/ccalcas.jpg"),
-                                AssetImage("assets/csapatos.png"),
-                                AssetImage("assets/ctshirt.jpg"),
-                                AssetImage("assets/cchapeu.png"),
-                              ],
-
-                            )
-                              
-                            
-                          ),
-                           Container(
-                    height: 60,    
-                    color: Colors.white,            
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      
-                      children:const  <Widget>[
-                         Text("Categories",
-                         style: TextStyle(fontSize:17,fontWeight: FontWeight.bold),
-                         ),
-                           Text(
-                                    "See All",
-                                    style: TextStyle(
-                                        fontSize: 17, fontWeight: FontWeight.bold),
-                                  ),
-                     
-                    ],
-                    ),
-                  ),
-                  Container(
-                    height: 60,
-                    child: Row(
-                      children: <Widget>[
-                       _buildCategoryProduct("CatSapatilha.png"),
-                           _buildCategoryProduct("CatSapatilha.png"),
-                                _buildCategoryProduct("CatSapatilha.png"),
-                                     _buildCategoryProduct("CatSapatilha.png"),
-                                          _buildCategoryProduct("CatSapatilha.png"),
-                      ],
-                    ),
-                  ),
+                         _buildImageSlider(),
+                         _buildCategory(),
                   const SizedBox(
-                    height: 10,
-           
-                  
+                    height: 10,                  
                   ),
                                Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -233,8 +240,34 @@ Widget _buildCategoryProduct(String image) {
                               ),
                           Row(
                             children: <Widget>[
-                              SingleProduct(image:"relogio" , price: 40, name: "relogio.jpg"),
-                              SingleProduct(image: "Camisola", price: 20, name: "camisola.jpg"),
+                              GestureDetector(
+                                  onTap: (){
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (ctx)=>DetailScreen( 
+                                        image:"relogio.jpg" ,
+                                          price: 40,
+                                            name: "Relogio"),
+                                    ),
+                                    );
+                                },
+                                child: SingleProduct(
+                                  image:"Relogio" ,
+                                   price: 40,
+                                    name: "relogio.jpg"),
+                              ),
+                              GestureDetector(
+                                  onTap: (){
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (ctx)=>DetailScreen( 
+                                        image: "camisola.jpg",
+                                         price: 20, 
+                                          name: "Camisola"),
+                                    ),
+                                    );
+                                },
+                                child: SingleProduct(image: "Camisola", price: 20, name: "camisola.jpg")),
                              
                             ],
                           )
@@ -281,8 +314,30 @@ Widget _buildCategoryProduct(String image) {
                         children: <Widget>[
                           Row(
                             children: <Widget>[  
-                              SingleProduct(image:"Boxers",price: 15.0, name:"boxers.png"),
-                              SingleProduct(image:"Meias", price:17.5,name: "meias.png")
+                              GestureDetector(
+                                  onTap: (){
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (ctx)=>DetailScreen( 
+                                        image:"boxers.png",
+                                        price: 15.0, 
+                                        name:"Boxers"),
+                                    ),
+                                    );
+                                },
+                                child: SingleProduct(image:"Boxers",price: 15.0, name:"boxers.png")),
+                              GestureDetector(
+                                  onTap: (){
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (ctx)=>DetailScreen( 
+                                        image:"meias.png",
+                                         price:17.5,
+                                         name: "Meias"),
+                                    ),
+                                    );
+                                },
+                                child: SingleProduct(image:"Meias", price:17.5,name: "meias.png"))
                             ],
                           )
                         ],
