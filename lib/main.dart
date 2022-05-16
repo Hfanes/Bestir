@@ -1,8 +1,8 @@
 import 'package:bestir/screens/home/home.dart';
-import 'package:bestir/widgets/detailscreen.dart';
-import 'package:bestir/widgets/listproducts.dart';
-import 'package:bestir/screens/login/login.dart';
-import 'package:bestir/screens/signup/signup.dart';
+// import 'package:bestir/widgets/detailscreen.dart';
+// import 'package:bestir/widgets/listproducts.dart';
+// import 'package:bestir/screens/login/login.dart';
+// import 'package:bestir/screens/signup/signup.dart';
 import 'package:bestir/states/currentUser.dart';
 import 'package:bestir/utils/ourTheme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: OurTheme().buildTheme(),
-          home:HomeScreeen()),
+          home: HomeScreeen()),
     );
   }
 }
