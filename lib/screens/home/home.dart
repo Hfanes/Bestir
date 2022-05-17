@@ -13,6 +13,7 @@ class HomeScreeen extends StatefulWidget {
 }
 
 class _HomeScreeenState extends State<HomeScreeen> {
+
   Widget _buildCategoryProduct(String image) {
     return CircleAvatar(
       maxRadius: 36,
@@ -102,23 +103,31 @@ class _HomeScreeenState extends State<HomeScreeen> {
     );
   }
 
-  // Widget _buildImageSlider() {
-  //   return Container(
-  //     height: 240,
-  //     child: Carousel(
-  //       autoplay: true,
-  //       boxFit: BoxFit.fill,
-  //       showIndicator: false,
-  //       images: const [
-  //         AssetImage("assets/ccalcas.jpg"),
-  //         AssetImage("assets/csapatos.png"),
-  //         AssetImage("assets/ctshirt.jpg"),
-  //         AssetImage("assets/cchapeu.png"),
-  //       ],
-  //     ),
-  //   );
-  // }
+  Widget _buildImageSlider() { 
+    return SingleChildScrollView(
+  
+      scrollDirection: Axis.horizontal,
+      
+      child: Container(
+            height: 240,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: <Widget>[
+            Image.asset("assets/ccalcas.jpg"),
+            Image.asset("assets/catVestido.png"),
+            Image.asset("assets/csapatos.png"),
 
+          ],
+        ),
+      ),
+    ),
+      
+
+     
+    );
+  }
+  
   Widget _buildCategory() {
     return Column(
       children: <Widget>[
@@ -155,137 +164,81 @@ class _HomeScreeenState extends State<HomeScreeen> {
     );
   }
 
-  bool homeColor = false;
-
-  bool cartColor = false;
-
-  bool aboutColor = false;
-
-  bool contactUsColor = false;
-
-  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        key: _key,
-        drawer: _buildDrawer(),
-        appBar: AppBar(
-          title: const Text("Home Page",
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-          centerTitle: true,
-          elevation: 0.0,
-          backgroundColor: Colors.grey,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              ///////////////////////////////??????????
-              _key.currentState?.openDrawer();
-            },
-          ),
-          actions: <Widget>[
-            IconButton(
-                icon: const Icon(Icons.search, color: Colors.black),
-                onPressed: () {}),
-          ],
-        ),
-        body: Container(
-            height: double.infinity,
-            width: double.infinity,
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            child: ListView(children: <Widget>[
-              Column(children: <Widget>[
-                Container(
-                  color: Colors.white,
-                  width: double.infinity,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              //_buildImageSlider(),
-                              _buildCategory(),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  const Text(
-                                    "Featured",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                          builder: (ctx) =>
-                                              ListProduct(name: "Featured"),
-                                        ),
-                                      );
-                                    },
-                                    child: const Text(
-                                      "View more",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                          builder: (ctx) => DetailScreen(
-                                              image: "relogio.jpg",
-                                              price: 40,
-                                              name: "Relogio"),
-                                        ),
-                                      );
-                                    },
-                                    child: SingleProduct(
-                                        image: "Relogio",
-                                        price: 40,
-                                        name: "relogio.jpg"),
-                                  ),
-                                  GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                            builder: (ctx) => DetailScreen(
-                                                image: "camisola.jpg",
-                                                price: 20,
-                                                name: "Camisola"),
-                                          ),
-                                        );
-                                      },
-                                      child: SingleProduct(
-                                          image: "Camisola",
-                                          price: 20,
-                                          name: "camisola.jpg")),
-                                ],
-                              )
-                            ],
-                          ),
-                        ],
+  Widget _buildFeatured(){
+    return Column(
+      children: <Widget>[
+        Row(
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                const Text(
+                  "Featured",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (ctx) =>
+                            ListProduct(name: "Featured"),
                       ),
-                      ////////////////
+                    );
+                  },
+                  child: const Text(
+                    "View more",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (ctx) => DetailScreen(
+                            image: "relogio.jpg",
+                            price: 40,
+                            name: "Relogio"),
+                      ),
+                    );
+                  },
+                  child: SingleProduct(
+                      image: "Relogio",
+                      price: 40,
+                      name: "relogio.jpg"),
+                ),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (ctx) => DetailScreen(
+                              image: "camisola.jpg",
+                              price: 20,
+                              name: "Camisola"),
+                        ),
+                      );
+                    },
+                    child: SingleProduct(
+                        image: "Camisola",
+                        price: 20,
+                        name: "camisola.jpg"),
+                        ),
+              ],
+            )
+      ],
+    );
+  }
 
-                      Container(
+  Widget _buildNewAchives(){
+    return Column(
+      children: <Widget>[
+           Container(
                         height: 50,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -363,10 +316,79 @@ class _HomeScreeenState extends State<HomeScreeen> {
                           ),
                         ],
                       ),
-                    ],
-                  ),
+      ],
+    );
+  }
+
+  bool homeColor = false;
+
+  bool cartColor = false;
+
+  bool aboutColor = false;
+
+  bool contactUsColor = false;
+
+  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.white,
+        key: _key,
+        drawer: _buildDrawer(),
+        appBar: AppBar(
+          title: const Text("Home Page",
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+          centerTitle: true,
+          elevation: 0.0,
+          backgroundColor: Colors.grey,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              ///////////////////////////////??????????
+              _key.currentState?.openDrawer();
+            },
+          ),
+          actions: <Widget>[
+            IconButton(
+                icon: const Icon(Icons.search, color: Colors.black),
+                onPressed: () {}),
+          ],
+        ),
+        body: Container(
+            height: double.infinity,
+            width: double.infinity,
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            child: ListView(
+              children: <Widget>[
+              Container(
+                color: Colors.white,
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        _buildImageSlider(),
+                        _buildCategory(),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _buildFeatured(),
+                        _buildNewAchives(),
+                      ],
+                    ),
+                  ],
                 ),
-              ])
-            ])));
+              ),
+          ],
+        ),
+      ),
+    );
   }
 }

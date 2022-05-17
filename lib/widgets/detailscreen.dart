@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bestir/screens/cart/cartscreen.dart';
 import 'package:bestir/screens/home/home.dart';
 import 'package:flutter/material.dart';
 
@@ -33,48 +34,8 @@ class _DetailScreenState extends State<DetailScreen> {
             ); 
 }
 
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.name,
-        style:const TextStyle(
-          fontWeight: FontWeight.bold
-          ),
-          ),
-        centerTitle: true,
-        backgroundColor: Colors.grey,
-        elevation:0.0,
-        leading: IconButton(
-          icon:const Icon(
-            Icons.arrow_back,
-            color: Colors.white
-            ),
-            onPressed: (){
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (ctx)=>HomeScreeen(),
-                  ),
-                 );
-                },
-               ) ,
-            actions: <Widget>[
-              IconButton(
-                icon:const  Icon(
-                  Icons.notifications_none,
-                  color: Colors.black,),
-                  onPressed: (){},
-                  ),
-            ],
-      ),
-      body: Container(
-        decoration: BoxDecoration(color: Colors.white),
-        child: ListView(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Center(
+  Widget _buildImage(){
+    return Center(
                   child: Container(
                     width: 350,
                     child: Card(
@@ -91,13 +52,11 @@ class _DetailScreenState extends State<DetailScreen> {
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical:10,horizontal:10 ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children:<Widget> [
-                      Container(
+                );
+  }
+
+  Widget _buildNameToDescription(){
+    return  Container(
                         height: 100,
                         child: Row(
                           children:<Widget> [
@@ -126,8 +85,11 @@ class _DetailScreenState extends State<DetailScreen> {
                             ),
                           ],
                         ),
-                      ),
-                      Container(
+                      );
+  }
+
+  Widget _buildDescription(){
+    return Container(
                         height: 150,
                         child: ListView(//Container
                           children:const  <Widget>[
@@ -138,12 +100,16 @@ class _DetailScreenState extends State<DetailScreen> {
                             )
                           ],
                         ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const  Text("Size",style: TextStyle(
+                      );
+  }
+
+  Widget _buildSize(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const  Text("Size",style: TextStyle(
                         fontSize: 18,
+                        fontWeight: FontWeight.bold
                       ),
                       ),
                       const SizedBox(
@@ -161,9 +127,17 @@ class _DetailScreenState extends State<DetailScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 10,),
-                      const  Text("Color",style: TextStyle(
+      ],
+    );
+  }
+
+  Widget _buildColors(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const  Text("Color",style: TextStyle(
                         fontSize: 18,
+                         fontWeight: FontWeight.bold
                       ),
                       ),
                       const SizedBox(
@@ -181,10 +155,18 @@ class _DetailScreenState extends State<DetailScreen> {
                           ],
                         ),
                       ),
-                     const  SizedBox(height: 10,),
-                     const Text("Quantity",
+      ],
+    );
+  }
+
+  Widget _buildQuantity(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const Text("Quantity",
                       style: TextStyle(
                         fontSize: 18,
+                         fontWeight: FontWeight.bold
                         ),
                         ),
                          const  SizedBox(height: 10,),
@@ -227,8 +209,12 @@ class _DetailScreenState extends State<DetailScreen> {
                            ],
                          ),
                        ),
-                       const SizedBox(height: 15,),
-                  Container(
+      ],
+    );
+  }
+
+  Widget _buildButton(){
+    return Container(
                     //color: Colors.pink,
                     height: 45,
                     width: double.infinity,
@@ -240,18 +226,83 @@ class _DetailScreenState extends State<DetailScreen> {
                         )
                         
                       ),
-                      onPressed: (){},
+                      onPressed: (){
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (ctx)=>CartScreen(
+                              image: widget.image,
+                               name: widget.name, 
+                               price: widget.price
+                               ),
+                               ),
+                               );
+                      
+                      },
                      child:const Text("Add Product",
                      style: TextStyle(
                        fontSize:18
                            ),
                          ),
                        ),
-                     )
-                    ],
+                     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.name,
+        style:const TextStyle(
+          fontWeight: FontWeight.bold
+          ),
+          ),
+        centerTitle: true,
+        backgroundColor: Colors.grey,
+        elevation:0.0,
+        leading: IconButton(
+          icon:const Icon(
+            Icons.arrow_back,
+            color: Colors.white
+            ),
+            onPressed: (){
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (ctx)=>HomeScreeen(),
                   ),
-                ),
-              ],
+                 );
+                },
+               ) ,
+            actions: <Widget>[
+              IconButton(
+                icon:const  Icon(
+                  Icons.notifications_none,
+                  color: Colors.black,),
+                  onPressed: (){},
+                  ),
+            ],
+      ),
+      body: Container(
+        decoration: BoxDecoration(color: Colors.white),
+        child: ListView(
+          children: <Widget>[
+            _buildImage(),
+            Container(
+              padding: EdgeInsets.symmetric(vertical:10,horizontal:10 ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children:<Widget> [
+                 _buildNameToDescription(),
+                 _buildDescription(),
+                  const SizedBox(height: 8,),
+                 _buildSize(),
+                 const SizedBox(height: 10,),
+                 _buildColors(),
+                 const  SizedBox(height: 10,),
+                 _buildQuantity(),
+                   const SizedBox(height: 15,),
+                 _buildButton()
+                ],
+              ),
             ),
           ],
         ),
