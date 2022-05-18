@@ -1,3 +1,4 @@
+import 'package:bestir/screens/checkout/checkout.dart';
 import 'package:flutter/material.dart';
 
 
@@ -120,7 +121,15 @@ class _CartScreenState extends State<CartScreen> {
                           borderRadius: BorderRadius.zero,
                         )
                       ),
-         onPressed: (){},
+                        onPressed: (){
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (ctx)=>CheckOut(
+                              image: widget.image,
+                               name: widget.name, 
+                               price: widget.price) 
+                            )
+                            );
+                        },
                       child:const Text("Continous",style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -155,9 +164,6 @@ class _CartScreenState extends State<CartScreen> {
       ),
       body: ListView(
         children: <Widget>[
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
           _buildSingleCartProduct(),
           _buildSingleCartProduct(),
           _buildSingleCartProduct(),

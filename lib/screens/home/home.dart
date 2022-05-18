@@ -18,6 +18,7 @@ class HomeScreeen extends StatefulWidget {
 }
 
 class _HomeScreeenState extends State<HomeScreeen> {
+  
   Widget _buildCategoryProduct(String image) {
     return CircleAvatar(
       maxRadius: 36,
