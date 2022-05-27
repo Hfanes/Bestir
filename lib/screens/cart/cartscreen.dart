@@ -1,112 +1,21 @@
+import 'package:bestir/provider/product_provider.dart';
+import 'package:bestir/screens/cart/cartsingleproduct.dart';
 import 'package:bestir/screens/checkout/checkout.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 class CartScreen extends StatefulWidget {
   
-  final String image;
-  final String name;
-  final double price;
-  CartScreen({required this.image,required this.name,required this.price});
-
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
+late ProductProvider productProvider;
 
 class _CartScreenState extends State<CartScreen> {
-
-  int count=1;
-
-  Widget _buildSingleCartProduct(){
-    return Container(
-            height: 150,
-            width: double.infinity,
-            child: Card(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        height: 130,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image:AssetImage("assets/${widget.name}"),
-                            ),
-                        ),
-                      ),
-                   Container(
-                     height: 140,
-                     width: 200,
-                     child:ListTile(
-                       title: Column(
-                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                         crossAxisAlignment: CrossAxisAlignment.start,
-                         children:<Widget> [
-                            Text(widget.image),
-                           const Text("Clothes"),
-                             Text("\$ ${widget.price.toString()}",
-                             style:const TextStyle(
-                               color: Colors.grey,
-                               fontWeight: FontWeight.bold
-                               ),
-                               ),
-                               
-                         Container(
-                             height: 35,
-                             width: 120,
-                             decoration:BoxDecoration(
-                               color: Color.fromARGB(255, 218, 211, 211),
-                               borderRadius: BorderRadius.circular(20),
-                             ),
-                             child: Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                               children: <Widget>[
-                                 GestureDetector(
-                                    child:const Icon(Icons.remove),
-                                    onTap: (){
-                                      setState(() {
-                                        if(count>1){
-                                          count--;
-                                        }
-                                      }
-                                      );
-                                    },
-                                    ),
-                                 Text(
-                                   count.toString(),
-                                 style: const TextStyle(
-                                   fontSize: 18
-                                   ),
-                                   ),
-                                GestureDetector(
-                                    child:const Icon(Icons.add),
-                                    onTap: (){
-                                      setState(() {
-                                        count++;
-                                      }
-                                      );
-                                    },
-                                    ),    
-                               ],
-                             ),
-                           ),
-                         ],
-                       ),
-                     ),
-                   )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          );
-  }
-
   @override
   Widget build(BuildContext context) {
+      productProvider=Provider.of<ProductProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: Container(
@@ -121,14 +30,14 @@ class _CartScreenState extends State<CartScreen> {
                           borderRadius: BorderRadius.zero,
                         )
                       ),
-                        onPressed: (){
+                        onPressed: (){ 
+                          
                           Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (ctx)=>CheckOut(
-                              image: widget.image,
-                               name: widget.name, 
-                               price: widget.price) 
-                            )
+                            MaterialPageRoute(
+                              builder: (context)=>CheckOut(),
+                              ),
                             );
+
                         },
                       child:const Text("Continous",style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -146,13 +55,7 @@ class _CartScreenState extends State<CartScreen> {
         centerTitle: true,
         backgroundColor: Colors.grey,
         elevation:0.0,
-        leading: IconButton(
-          icon:const Icon(
-            Icons.arrow_back,
-            color: Colors.white
-            ),
-            onPressed: (){},
-               ),
+        iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               IconButton(
                 icon:const  Icon(
@@ -162,12 +65,15 @@ class _CartScreenState extends State<CartScreen> {
                   ),
             ],
       ),
-      body: ListView(
-        children: <Widget>[
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-        ],
+      body: ListView.builder(
+        itemCount: productProvider.getCartModelListLength,
+     itemBuilder: (ctx,index)=>CartSingleProduct(
+       //isCount:false,
+       name: productProvider.getCartModelList[index].name,
+        image: productProvider.getCartModelList[index].image,
+         quantity: productProvider.getCartModelList[index].quantity,
+          price: productProvider.getCartModelList[index].price),
+
       ),
     );
   }

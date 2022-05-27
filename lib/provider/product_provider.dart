@@ -1,10 +1,23 @@
+import 'package:bestir/model/cartmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../model/product.dart';
 class ProductProvider with ChangeNotifier{
 
+List<CartModel> cartModelList=[];
+late CartModel cartModel;
+ void getCartdata({required String name,required String image,required int quantity,required double price}){
+   cartModel=CartModel(name, image, price, quantity);
 
+   cartModelList.add(cartModel);
+ }
+ List<CartModel> get getCartModelList{
+   return List.from(cartModelList);
+ }
 
+ int get getCartModelListLength{
+   return cartModelList.length;
+ }
 
   //Featured  
   List<Product> feature=[];
@@ -35,7 +48,6 @@ class ProductProvider with ChangeNotifier{
 
   //Featuredhome
   List<Product> homefeature=[];
- // late Product homeFeatureData;
   Future<void> getHomeFeatureData() async{
     List<Product> newList=[];
     QuerySnapshot featureSnapShot=await FirebaseFirestore.instance
@@ -58,7 +70,6 @@ class ProductProvider with ChangeNotifier{
 
   //Achiveshome
   List<Product> homeAchives=[];
-  //late Product homeAchivesData;
   Future<void> getHomeAchivesData() async{
     List<Product> newList=[];
     QuerySnapshot featureSnapShot=await FirebaseFirestore.instance
@@ -80,7 +91,6 @@ class ProductProvider with ChangeNotifier{
   }
 
   
-
   //newAchives
     List<Product> newAchives=[];
   late Product newAchivesData;

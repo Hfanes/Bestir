@@ -1,11 +1,10 @@
+import 'package:bestir/provider/product_provider.dart';
+import 'package:bestir/screens/cart/cartsingleproduct.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CheckOut extends StatefulWidget {
-
-  final String image;
-  final String name;
-  final double price;
-  CheckOut({required this.image,required this.name,required this.price});
+  
 
   @override
   State<CheckOut> createState() => _CheckOutState();
@@ -13,74 +12,7 @@ class CheckOut extends StatefulWidget {
 
 class _CheckOutState extends State<CheckOut> {
 
-
-Widget _buildSingleCartProduct(){
-    return Container(
-            height: 150,
-            width: double.infinity,
-            child: Card(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        height: 130,
-                        width: 150,
-                        decoration:BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image:AssetImage("assets/${widget.image}"),
-                            ),
-                        ),
-                      ),
-                   Container(
-                     height: 140,
-                     width: 200,
-                     child:ListTile(
-                       title: Column(
-                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                         crossAxisAlignment: CrossAxisAlignment.start,
-                         children:<Widget> [
-                           Text(
-                                "${widget.name}"
-                              ),
-                           const Text(
-                             "Clothes"
-                             ),
-                            Text(
-                               "\$ ${widget.price}",
-                             style: TextStyle(
-                               color: Colors.grey,
-                               fontWeight: FontWeight.bold
-                               ),
-                               ),
-                         Container(
-                             height: 35,
-                             width: 100,
-                             decoration:BoxDecoration(
-                               color: Color.fromARGB(255, 218, 211, 211),
-                               borderRadius: BorderRadius.circular(20),
-                             ),
-                             child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                               children:  <Widget>[
-                                Text("Quantity:"),
-                                Text("1")
-                               ],
-                             ),
-                           ),
-                         ],
-                       ),
-                     ),
-                   )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          );
-  }
+late ProductProvider productProvider;
 
 Widget _buildBottomDetail({required String startName,required String endName}){
   return Row(
@@ -108,6 +40,7 @@ Widget _buildBottomDetail({required String startName,required String endName}){
 
   @override
   Widget build(BuildContext context) {
+     productProvider=Provider.of<ProductProvider>(context);
     return Scaffold( 
        appBar: AppBar(
         title:  const Text("Check Out Page",
@@ -118,13 +51,7 @@ Widget _buildBottomDetail({required String startName,required String endName}){
         centerTitle: true,
         backgroundColor: Colors.grey,
         elevation:0.0,
-        leading: IconButton(
-          icon:const Icon(
-            Icons.arrow_back,
-            color: Colors.white
-            ),
-            onPressed: (){},
-               ),
+        iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               IconButton(
                 icon:const  Icon(
@@ -155,27 +82,33 @@ Widget _buildBottomDetail({required String startName,required String endName}){
         ),
       ),
       backgroundColor: Colors.white,
-    body: Container(
+    body: SingleChildScrollView(
+     scrollDirection: Axis.vertical,
       padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
-      child: ListView(
-        children: <Widget>[
-          Column(
+      child:Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              _buildSingleCartProduct(),
-              _buildSingleCartProduct(),
-                 _buildSingleCartProduct(),
-              _buildSingleCartProduct(),
-                 _buildSingleCartProduct(),
-              _buildSingleCartProduct(),
-                 _buildSingleCartProduct(),
-              _buildSingleCartProduct(),
-              
+              SizedBox(
+                height: 470,
+                child: ListView.builder(
+        itemCount: productProvider.getCartModelListLength,
+       itemBuilder:(ctx,index){
+         return CartSingleProduct(
+                  name:productProvider.getCartModelList[index].name,
+                 image: productProvider.getCartModelList[index].image,
+                  quantity: productProvider.getCartModelList[index].quantity,
+                   price: productProvider.getCartModelList[index].price
+                      );
+                   }
+                 ),
+              ),
              Container(
                height: 150,
                child: Column(
                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                  children: <Widget>[
+                  
+
                    _buildBottomDetail(startName: "Your Price", endName: "\$ 60.00"),
                    _buildBottomDetail(startName: "Discount", endName: "3%"),
                    _buildBottomDetail(startName: "Shipping", endName: "\$ 6.00"),
@@ -186,8 +119,11 @@ Widget _buildBottomDetail({required String startName,required String endName}){
                ),
              ),
             ],
-          ),
-        ],
+         
+
+
+         
+        
       ),
     ),
     );

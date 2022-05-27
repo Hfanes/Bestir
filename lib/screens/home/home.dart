@@ -27,21 +27,10 @@ class HomeScreeen extends StatefulWidget {
 late CategoryProvider categoryprovider;
 late ProductProvider productprovider;
 
-//Featuredproducts
-//   late Product menlongshirtdata;
-//  late Product womenwatchdata;
- 
-//NewAchives
-// late Product womentshirt;
-// late Product womencap;
-//snapshots
+
 var featuredSnapShot;
 var newAchivesSnapShot;
-// var cap;
-// var shoes;
-// var shirt;
-// var dress;
-// var watch;
+
 
 
 
@@ -264,6 +253,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
   }
 
   Widget _buildFeatured() {
+
     List<Product> featureProduct;
     List<Product> homeFeatureProduct;
     homeFeatureProduct=productprovider.getHomeFeaturedList;
@@ -321,24 +311,24 @@ class _HomeScreeenState extends State<HomeScreeen> {
                               ),
                                 ),
                   ),
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.of(context).pushReplacement(
-              //       MaterialPageRoute(
-              //         builder: (ctx) => DetailScreen(
-              //             image: e.name, 
-              //              price: e.price, 
-              //              name: e.image,
-              //              ),
-              //       ),
-              //     );
-              //   },
-              //   child: SingleProduct(
-              //       image: e.name, 
-              //       price: e.price, 
-              //       name: e.image,
-              //       ),
-              // ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => DetailScreen(
+                          image: e.name, 
+                           price: e.price, 
+                           name: e.image,
+                           ),
+                    ),
+                  );
+                },
+                child: SingleProduct(
+                    image: e.name, 
+                    price: e.price, 
+                    name: e.image,
+                    ),
+              ),
               ],
             ),
           );
@@ -407,7 +397,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
                             ),
                           );
                                                   },
-                                                  child: SingleProduct(
+                           child: SingleProduct(
                             image: e.name,
                              price: e.price, 
                              name: e.image)

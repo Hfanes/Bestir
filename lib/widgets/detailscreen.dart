@@ -1,8 +1,8 @@
-import 'dart:ui';
-
+import 'package:bestir/provider/product_provider.dart';
 import 'package:bestir/screens/cart/cartscreen.dart';
-import 'package:bestir/screens/home/home.dart';
 import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
 
 class DetailScreen extends StatefulWidget {
 
@@ -17,6 +17,7 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   int count=1;
+  late ProductProvider productProvider;
 
   Widget _buildSizeColorProduct(String size,Color color){
       return Container(
@@ -37,7 +38,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget _buildImage(){
     return Center(
                   child: Container(
-                    width: 350,
+                    width: 250,
                     child: Card(
                       child: Container(
                         padding: EdgeInsets.all(13),
@@ -215,7 +216,7 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   Widget _buildButton(){
-    return Container(
+    return  Container(
                     //color: Colors.pink,
                     height: 45,
                     width: double.infinity,
@@ -228,15 +229,16 @@ class _DetailScreenState extends State<DetailScreen> {
                         
                       ),
                       onPressed: (){
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (ctx)=>CartScreen(
-                              image: widget.image,
-                               name: widget.name, 
-                               price: widget.price
-                               ),
-                               ),
-                               );
+                        productProvider.getCartdata(
+                          name: widget.name,
+                         image: widget.image,
+                          quantity: count, 
+                          price: widget.price);
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (ctx)=>CartScreen(),
+                              ),
+                            );
                       
                       },
                      child:const Text("Add Product",
@@ -250,6 +252,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    productProvider=Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.image,

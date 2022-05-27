@@ -4,6 +4,7 @@ import 'package:bestir/screens/home/home.dart';
 import 'package:bestir/screens/login/login.dart';
 import 'package:bestir/states/currentUser.dart';
 import 'package:bestir/utils/ourTheme.dart';
+import 'package:bestir/widgets/detailscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -36,12 +37,11 @@ class MyApp extends StatelessWidget {
             child: StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (ctx,snapshot){
-                if(snapshot.hasData){
-                  return HomeScreeen();
-                }
-                else{
-                  return OurLogin();
-                }
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  theme: ThemeData(iconTheme: IconThemeData(color: Colors.black)),
+                  home: snapshot.hasData ? HomeScreeen():OurLogin(),
+                );
               },
             ),
           )
