@@ -19,7 +19,7 @@ SingleProduct({Key? key, required this.image,required this.price,required this.n
       
       child: Container(
         height: 170,
-        width: 150,
+        width: 168,
         color: Colors.white,
         child: Column(
           children: <Widget>[
@@ -33,7 +33,9 @@ SingleProduct({Key? key, required this.image,required this.price,required this.n
                     color: Colors.white,
                     image: DecorationImage(
                       fit: BoxFit.fill,
-                       image: AssetImage("assets/$name"))),
+                       image: NetworkImage(name)
+                       ),
+                     ),
               ),
             ),
             Text(

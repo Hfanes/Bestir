@@ -33,7 +33,7 @@ class _CartScreenState extends State<CartScreen> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.fill,
-                            image:AssetImage("assets/${widget.image}"),
+                            image:AssetImage("assets/${widget.name}"),
                             ),
                         ),
                       ),
@@ -45,7 +45,7 @@ class _CartScreenState extends State<CartScreen> {
                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                          crossAxisAlignment: CrossAxisAlignment.start,
                          children:<Widget> [
-                            Text(widget.name),
+                            Text(widget.image),
                            const Text("Clothes"),
                              Text("\$ ${widget.price.toString()}",
                              style:const TextStyle(

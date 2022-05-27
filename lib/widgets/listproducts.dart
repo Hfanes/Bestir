@@ -1,11 +1,12 @@
+import 'package:bestir/model/product.dart';
 import 'package:bestir/screens/home/home.dart';
 import 'package:bestir/widgets/singleproduct.dart';
 import 'package:flutter/material.dart';
 
 class ListProduct extends StatelessWidget {
     final String name;
-
-     const ListProduct({required this.name});
+    List<Product> snapShot;
+     ListProduct({required this.name,required this.snapShot});
 
 
 
@@ -18,7 +19,7 @@ class ListProduct extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.grey,
         elevation: 0.0,
-        leading:IconButton(icon: Icon(Icons.arrow_back),onPressed:(){ Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(ctx)=>HomeScreeen()));}),
+        iconTheme: IconThemeData(color: Colors.black),
         actions: <Widget>[
           IconButton(
              icon: Icon(Icons.search),
@@ -59,22 +60,21 @@ class ListProduct extends StatelessWidget {
                                height: 10,
                                ),
                          Container(
-                           height: 700,
+                           height: 600,
                            child: GridView.count(
-                             crossAxisSpacing: 10,
-                             childAspectRatio: 0.9,
-                             crossAxisCount: 2,
-                             scrollDirection: Axis.vertical,
-                             children: <Widget>[
-                                       SingleProduct(image:"relogio", price:43.0, name:"relogio.jpg"),
-                                       SingleProduct(image:"Camisola", price:20.0, name:"camisola.jpg"),
-                                       SingleProduct(image:"relogio", price:43.0, name:"relogio.jpg"),
-                                       SingleProduct(image:"Camisola", price:20.0, name:"camisola.jpg"),
-                                       SingleProduct(image:"relogio", price:43.0, name:"relogio.jpg"),
-                                       SingleProduct(image:"relogio", price:43.0, name:"relogio.jpg"),
-                                       SingleProduct(image:"relogio", price:43.0, name:"relogio.jpg"),
-                                       SingleProduct(image:"Camisola", price:20.0, name:"camisola.jpg"),
-                           ],
+                              scrollDirection: Axis.vertical,
+                              crossAxisCount:2 ,
+                              childAspectRatio: 0.9,
+                            //  crossAxisSpacing: 1,
+                            //  mainAxisSpacing: 1,
+                            //map(Closure: (dynamic) => SingleProduct))
+                           children: snapShot.map((e) => SingleProduct(
+                             image: e.name,
+                              price: e.price, 
+                              name: e.image
+                                ),
+                              )
+                              .toList(),
                            ),
                          )
                       ],

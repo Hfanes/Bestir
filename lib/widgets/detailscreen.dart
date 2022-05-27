@@ -46,7 +46,8 @@ class _DetailScreenState extends State<DetailScreen> {
                           decoration:BoxDecoration(
                             image: DecorationImage(
                               fit: BoxFit.fill,
-                              image:AssetImage("assets/${widget.image}"))
+                              image:NetworkImage(widget.name)
+                              )
                           )
                         ),
                       ),
@@ -64,7 +65,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget> [
-                                Text(widget.name,
+                                Text(widget.image,
                                 style: const TextStyle(
                                   fontSize: 18
                                     ),
@@ -251,7 +252,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.name,
+        title: Text(widget.image,
         style:const TextStyle(
           fontWeight: FontWeight.bold
           ),
@@ -259,19 +260,7 @@ class _DetailScreenState extends State<DetailScreen> {
         centerTitle: true,
         backgroundColor: Colors.grey,
         elevation:0.0,
-        leading: IconButton(
-          icon:const Icon(
-            Icons.arrow_back,
-            color: Colors.white
-            ),
-            onPressed: (){
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (ctx)=>HomeScreeen(),
-                  ),
-                 );
-                },
-               ) ,
+       iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               IconButton(
                 icon:const  Icon(

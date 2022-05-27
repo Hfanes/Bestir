@@ -1,19 +1,18 @@
-import 'package:bestir/screens/cart/cartscreen.dart';
-import 'package:bestir/screens/checkout/checkout.dart';
-import 'package:bestir/screens/checkout/checkout.dart';
+import 'package:bestir/provider/category_provider.dart';
+import 'package:bestir/provider/product_provider.dart';
 import 'package:bestir/screens/home/home.dart';
-// import 'package:bestir/widgets/detailscreen.dart';
-// import 'package:bestir/widgets/listproducts.dart';
-// import 'package:bestir/screens/login/login.dart';
-// import 'package:bestir/screens/signup/signup.dart';
+import 'package:bestir/screens/login/login.dart';
 import 'package:bestir/states/currentUser.dart';
 import 'package:bestir/utils/ourTheme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Provider.debugCheckInvalidValueType = null;
   await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -29,7 +28,23 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: OurTheme().buildTheme(),
-          home: HomeScreeen()
+          home: MultiProvider(
+            providers: [
+              ListenableProvider<ProductProvider>(create:((ctx) =>ProductProvider())),
+              ListenableProvider<CategoryProvider>(create:((ctx) =>CategoryProvider())),
+            ],
+            child: StreamBuilder(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (ctx,snapshot){
+                if(snapshot.hasData){
+                  return HomeScreeen();
+                }
+                else{
+                  return OurLogin();
+                }
+              },
+            ),
+          )
           ),
     );
   }
