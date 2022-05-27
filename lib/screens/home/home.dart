@@ -1,5 +1,6 @@
 import 'package:bestir/provider/category_provider.dart';
 import 'package:bestir/widgets/detailscreen.dart';
+import 'package:bestir/widgets/notification_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bestir/widgets/listproducts.dart';
 import 'package:bestir/widgets/singleproduct.dart';
@@ -480,7 +481,9 @@ class _HomeScreeenState extends State<HomeScreeen> {
         actions: <Widget>[
           IconButton(
               icon: const Icon(Icons.search, color: Colors.black),
-              onPressed: () {}),
+              onPressed: () {},
+              ),
+          NotificationButton(),
         ],
       ),
 

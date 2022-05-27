@@ -1,5 +1,6 @@
 import 'package:bestir/provider/product_provider.dart';
 import 'package:bestir/screens/cart/cartsingleproduct.dart';
+import 'package:bestir/widgets/notification_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -53,12 +54,7 @@ Widget _buildBottomDetail({required String startName,required String endName}){
         elevation:0.0,
         iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
-              IconButton(
-                icon:const  Icon(
-                  Icons.notifications_none,
-                  color: Colors.black,),
-                  onPressed: (){},
-                  ),
+             NotificationButton(),
             ],
       ),
        bottomNavigationBar: Container(

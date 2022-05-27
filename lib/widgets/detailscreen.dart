@@ -1,5 +1,6 @@
 import 'package:bestir/provider/product_provider.dart';
 import 'package:bestir/screens/cart/cartscreen.dart';
+import 'package:bestir/widgets/notification_button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -265,12 +266,7 @@ class _DetailScreenState extends State<DetailScreen> {
         elevation:0.0,
        iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
-              IconButton(
-                icon:const  Icon(
-                  Icons.notifications_none,
-                  color: Colors.black,),
-                  onPressed: (){},
-                  ),
+                NotificationButton(),
             ],
       ),
       body: Container(

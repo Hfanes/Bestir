@@ -1,6 +1,7 @@
 import 'package:bestir/provider/product_provider.dart';
 import 'package:bestir/screens/cart/cartsingleproduct.dart';
 import 'package:bestir/screens/checkout/checkout.dart';
+import 'package:bestir/widgets/notification_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,12 +27,12 @@ class _CartScreenState extends State<CartScreen> {
         child: ElevatedButton(
            style: ElevatedButton.styleFrom(
                         primary: Colors.blue,
-                        shape:const RoundedRectangleBorder(
+                        shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero,
                         )
                       ),
                         onPressed: (){ 
-                          
+                          productProvider.addNotification("notification");
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (context)=>CheckOut(),
@@ -39,7 +40,7 @@ class _CartScreenState extends State<CartScreen> {
                             );
 
                         },
-                      child:const Text("Continous",style: TextStyle(
+                      child: Text("Continous",style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                         color: Colors.white
@@ -57,12 +58,7 @@ class _CartScreenState extends State<CartScreen> {
         elevation:0.0,
         iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
-              IconButton(
-                icon:const  Icon(
-                  Icons.notifications_none,
-                  color: Colors.black,),
-                  onPressed: (){},
-                  ),
+              NotificationButton(),
             ],
       ),
       body: ListView.builder(
