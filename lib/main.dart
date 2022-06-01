@@ -2,6 +2,7 @@ import 'package:bestir/provider/category_provider.dart';
 import 'package:bestir/provider/product_provider.dart';
 import 'package:bestir/screens/home/home.dart';
 import 'package:bestir/screens/login/login.dart';
+import 'package:bestir/screens/profile/profilescreen.dart';
 import 'package:bestir/states/currentUser.dart';
 import 'package:bestir/utils/ourTheme.dart';
 import 'package:bestir/widgets/detailscreen.dart';
@@ -40,7 +41,8 @@ class MyApp extends StatelessWidget {
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
                   theme: ThemeData(iconTheme: IconThemeData(color: Colors.black)),
-                  home: snapshot.hasData ? HomeScreeen():OurLogin(),
+                 home: snapshot.hasData ? HomeScreeen():OurLogin(),
+                  //home: ProfileScreen(),
                 );
               },
             ),

@@ -3,6 +3,8 @@ import 'package:bestir/screens/home/home.dart';
 import 'package:bestir/widgets/singleproduct.dart';
 import 'package:flutter/material.dart';
 
+import 'detailscreen.dart';
+
 class ListProduct extends StatelessWidget {
     final String name;
     List<Product> snapShot;
@@ -68,13 +70,59 @@ class ListProduct extends StatelessWidget {
                             //  crossAxisSpacing: 1,
                             //  mainAxisSpacing: 1,
                             //map(Closure: (dynamic) => SingleProduct))
-                           children: snapShot.map((e) => SingleProduct(
+                           children: snapShot.map((e) {
+          return Container(
+            child: Row(
+              children: <Widget>[
+                  Expanded(
+                    child: 
+                    GestureDetector(
+                            onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => DetailScreen(
+                            image: e.name,
+                             price: e.price,
+                              name:e.image,
+                              ),
+                      ),
+                    );
+                                  },
+                                  child: SingleProduct(
                              image: e.name,
-                              price: e.price, 
-                              name: e.image
+                             price: e.price,
+                              name:e.image,
+                              ),
                                 ),
-                              )
-                              .toList(),
+                  ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => DetailScreen(
+                          image: e.name, 
+                           price: e.price, 
+                           name: e.image,
+                           ),
+                    ),
+                  );
+                },
+                child: SingleProduct(
+                    image: e.name, 
+                    price: e.price, 
+                    name: e.image,
+                    ),
+              ),
+              ],
+            ),
+          );
+        }).toList(),
+                          //  => SingleProduct(
+                          //    image: e.name,
+                          //     price: e.price, 
+                          //     name: e.image
+                          //       ),
+                              
                            ),
                          )
                       ],

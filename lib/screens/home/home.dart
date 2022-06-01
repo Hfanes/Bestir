@@ -293,8 +293,9 @@ class _HomeScreeenState extends State<HomeScreeen> {
             child: Row(
               children: <Widget>[
                   Expanded(
-                    child: GestureDetector(
-                                  onTap: () {
+                    child: 
+                    GestureDetector(
+                            onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (ctx) => DetailScreen(

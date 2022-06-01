@@ -74,7 +74,6 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                                    fontSize: 18
                                    ),
                                    ),
-                                    
                                ],
                              ),
                            ),

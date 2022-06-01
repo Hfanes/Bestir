@@ -126,4 +126,28 @@ late CartModel cartModel;
   int get getNotificationIndex{
     return notificationList.length;
   }
+
+    List<CartModel> CheckOutModelList=[];
+  late CartModel CheckOutModel;
+  void getCheckOutData({
+    required int quantity,
+   required double price,
+    required String name,
+    required String image,
+  }){
+    CheckOutModel=CartModel(
+      name, 
+      image, 
+      price, 
+      quantity);
+      CheckOutModelList.add(CheckOutModel);
+  }
+
+   List<CartModel> get getCheckOutModelList {
+    return List.from(CheckOutModelList);
+  }
+
+  int get getCheckOutModelListLength {
+    return CheckOutModelList.length;
+  }
 }
