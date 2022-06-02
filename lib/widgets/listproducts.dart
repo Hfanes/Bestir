@@ -67,7 +67,7 @@ class ListProduct extends StatelessWidget {
                     //  mainAxisSpacing: 1,
                     //map(Closure: (dynamic) => SingleProduct))
                     children: snapShot.map((e) {
-                      return Expanded(
+                      return Container(
                         child: Row(
                           children: <Widget>[
                             Expanded(
