@@ -25,27 +25,29 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => CurretnUser(),
+      create: (context) => CurrentUser(),
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: OurTheme().buildTheme(),
           home: MultiProvider(
             providers: [
-              ListenableProvider<ProductProvider>(create:((ctx) =>ProductProvider())),
-              ListenableProvider<CategoryProvider>(create:((ctx) =>CategoryProvider())),
+              ListenableProvider<ProductProvider>(
+                  create: ((ctx) => ProductProvider())),
+              ListenableProvider<CategoryProvider>(
+                  create: ((ctx) => CategoryProvider())),
             ],
             child: StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
-              builder: (ctx,snapshot){
+              builder: (ctx, snapshot) {
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
-                  theme: ThemeData(iconTheme: IconThemeData(color: Colors.black)),
-                  home: snapshot.hasData ? HomeScreeen():OurLogin(),
+                  theme:
+                      ThemeData(iconTheme: IconThemeData(color: Colors.black)),
+                  home: snapshot.hasData ? HomeScreeen() : Login(),
                 );
               },
             ),
-          )
-          ),
+          )),
     );
   }
 }
