@@ -1,6 +1,7 @@
 # bestir
 
 New Store
+Run flutter pub get
 
 ## Getting Started
 
