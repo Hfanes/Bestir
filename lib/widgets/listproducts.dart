@@ -79,6 +79,7 @@ class ListProduct extends StatelessWidget {
                                         image: e.name,
                                         price: e.price,
                                         name: e.image,
+                                        description: e.description,
                                       ),
                                     ),
                                   );
@@ -98,6 +99,7 @@ class ListProduct extends StatelessWidget {
                                       image: e.name,
                                       price: e.price,
                                       name: e.image,
+                                      description: e.description,
                                     ),
                                   ),
                                 );

@@ -47,6 +47,7 @@ class ProductProvider with ChangeNotifier {
               userEmail: (element.data() as dynamic)["UserEmail"],
               userGender: (element.data() as dynamic)["UserGender"],
               userName: (element.data() as dynamic)["UserName"],
+              role: (element.data() as dynamic)["role"],
               userPhoneNumber: (element.data() as dynamic)["UserNumber"]);
           newList.add(userModel);
         }
@@ -100,8 +101,8 @@ class ProductProvider with ChangeNotifier {
         .get();
     featureSnapShot.docs.forEach(
       (element) {
-        featureData = Product(
-            element["name"], element["image"], element["price"].toDouble());
+        featureData = Product(element["name"], element["image"],
+            element["price"].toDouble(), element["description"]);
         newList.add(featureData);
       },
     );
@@ -124,8 +125,8 @@ class ProductProvider with ChangeNotifier {
         await FirebaseFirestore.instance.collection("homefeature").get();
     featureSnapShot.docs.forEach(
       (element) {
-        featureData = Product(
-            element["name"], element["image"], element["price"].toDouble());
+        featureData = Product(element["name"], element["image"],
+            element["price"].toDouble(), element["description"]);
         newList.add(featureData);
       },
     );
@@ -145,8 +146,8 @@ class ProductProvider with ChangeNotifier {
         await FirebaseFirestore.instance.collection("homeachives").get();
     featureSnapShot.docs.forEach(
       (element) {
-        featureData = Product(
-            element["name"], element["image"], element["price"].toDouble());
+        featureData = Product(element["name"], element["image"],
+            element["price"].toDouble(), element["description"]);
         newList.add(featureData);
       },
     );
@@ -170,8 +171,8 @@ class ProductProvider with ChangeNotifier {
         .get();
     achivesSnapShot.docs.forEach(
       (element) {
-        featureData = Product(
-            element["name"], element["image"], element["price"].toDouble());
+        featureData = Product(element["name"], element["image"],
+            element["price"].toDouble(), element["description"]);
         newList.add(featureData);
       },
     );

@@ -9,9 +9,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class SignUp extends StatefulWidget {
+class SignUpStore extends StatefulWidget {
   @override
-  _SignUpState createState() => _SignUpState();
+  _SignUpStoreState createState() => _SignUpStoreState();
 }
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -31,7 +31,7 @@ final TextEditingController userImage = TextEditingController();
 bool isMale = true;
 bool isLoading = false;
 
-class _SignUpState extends State<SignUp> {
+class _SignUpStoreState extends State<SignUpStore> {
   void submit() async {
     late UserCredential result;
     try {
@@ -74,7 +74,7 @@ class _SignUpState extends State<SignUp> {
       "UserGender": isMale == true ? "Male" : "Female",
       "UserNumber": phoneNumber.text,
       "userImage": "",
-      "role": "user",
+      "role": "store",
     });
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (ctx) => HomeScreeen()));
@@ -147,7 +147,7 @@ class _SignUpState extends State<SignUp> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           MyTextFormField(
-            name: "UserName",
+            name: "Store Name",
             controller: userName,
           ),
           SizedBox(
@@ -201,7 +201,7 @@ class _SignUpState extends State<SignUp> {
             height: 10,
           ),
           MyTextFormField(
-            name: "Phone Number",
+            name: "Contact",
             controller: phoneNumber,
           ),
           SizedBox(
@@ -265,7 +265,7 @@ class _SignUpState extends State<SignUp> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "Register",
+                  "Register Store",
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,

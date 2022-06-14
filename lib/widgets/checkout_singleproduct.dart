@@ -50,12 +50,12 @@ class _CheckOutSingleProductState extends State<CheckOutSingleProduct> {
             widget.image,
             style: myStyle,
           ),
-          IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () {
-              productProvider.deleteCheckoutProduct(widget.index);
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.close),
+          //   onPressed: () {
+          //     productProvider.deleteCheckoutProduct(widget.index);
+          //   },
+          // ),
         ],
       ),
     );
@@ -66,11 +66,18 @@ class _CheckOutSingleProductState extends State<CheckOutSingleProduct> {
       width: width * 0.4,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             widget.size,
             style: myStyle,
-          )
+          ),
+          IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () {
+              productProvider.deleteCheckoutProduct(widget.index);
+            },
+          ),
         ],
       ),
     );
@@ -114,7 +121,7 @@ class _CheckOutSingleProductState extends State<CheckOutSingleProduct> {
               children: <Widget>[
                 _buildImage(),
                 Container(
-                  height: height * 0.1 + 50,
+                  height: height * 0.1 + 60,
                   width: width * 0.6,
                   child: ListTile(
                     title: Column(

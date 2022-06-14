@@ -2,6 +2,9 @@ import 'package:bestir/screens/home/home.dart';
 import 'package:flutter/material.dart';
 
 class About extends StatelessWidget {
+  String desc =
+      "A Bestir é uma loja online global de moda e estilo de vida comprometida em tornar a beleza da moda acessível a todos. Usamos tecnologias de fabricação da melhor qualidade fornecendo sempre uma qualidade extraordinaria ao nosso cliente.Tentamos sempre reduzir o desperdício de peças permitindo fornecer uma variedade de produtos acessíveis aos nossos clientes. Temos o objetivo de vender em todos os paises do ,tendo o objetivo de chegar cada vez a mais clientes.";
+
   @override
   Widget build(BuildContext context) {
     Future<bool> redirectTo() async {
@@ -16,51 +19,39 @@ class About extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           elevation: 0.0,
-          backgroundColor: Color(0xfff8f8f8),
-          title: IconButton(
-            icon: Icon(
+          backgroundColor: Colors.grey,
+          title: const Text("About", style: TextStyle(color: Colors.black)),
+          centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(
               Icons.arrow_back,
               color: Colors.black,
             ),
             onPressed: () {
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (ctx) => HomeScreeen()));
+                MaterialPageRoute(
+                  builder: (ctx) => HomeScreeen(),
+                ),
+              );
             },
           ),
         ),
         body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 27),
-          height: double.infinity,
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "About",
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.black,
-                ),
-              ),
-              Image(
-                image: AssetImage("assets/welcome.png"),
-              ),
-              SizedBox(
-                height: 20,
-              ),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          child: ListView(
+            children: <Widget>[
               Container(
-                height: 280,
-                width: 360,
-                child: Wrap(
-                  children: [
-                    Text(
-                      "Somos uma loja de roupa",
-                      style: TextStyle(fontSize: 22, color: Colors.grey),
-                    ),
-                  ],
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                child: const Image(
+                  image: AssetImage("assets/welcome.png"),
                 ),
               ),
+              Text(
+                desc,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              )
             ],
           ),
         ),

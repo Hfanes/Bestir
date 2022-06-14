@@ -1,6 +1,9 @@
+// import 'dart:html';
+
 import 'package:bestir/provider/category_provider.dart';
 import 'package:bestir/screens/about/about.dart';
 import 'package:bestir/screens/checkout/checkout.dart';
+import 'package:bestir/screens/login/login.dart';
 import 'package:bestir/screens/profile/profilescreen.dart';
 import 'package:bestir/widgets/detailscreen.dart';
 import 'package:bestir/widgets/notification_button.dart';
@@ -12,8 +15,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:bestir/model/product.dart';
 import 'package:provider/provider.dart';
-
 import 'package:bestir/model/usermodel.dart';
+import 'package:bestir/screens/addProduct/addproduct.dart';
+
 import '../../provider/product_provider.dart';
 
 List<String> images = [
@@ -49,7 +53,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
   Widget _buildCategoryProduct(String image) {
     return CircleAvatar(
       maxRadius: 35, //36
-      backgroundColor: Color.fromARGB(158, 110, 107, 109),
+      backgroundColor: Colors.black,
       backgroundImage: AssetImage("assets/$image"),
     );
   }
@@ -58,6 +62,34 @@ class _HomeScreeenState extends State<HomeScreeen> {
     List<UserModel> userModel = productprovider.userModelList;
     return Column(
         children: userModel.map((e) {
+      if (e.role == "store") {
+        return Column(
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text(
+                e.userName!,
+                style: TextStyle(color: Colors.black),
+              ),
+              currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  backgroundImage: AssetImage("assets/userImage.png")),
+              decoration: BoxDecoration(color: Color(0xfff2f2f2)),
+              accountEmail:
+                  Text(e.userEmail!, style: TextStyle(color: Colors.black)),
+            ),
+            Container(
+              child: ListTile(
+                onTap: () {
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (ctx) => AddProduct()));
+                },
+                leading: Icon(Icons.my_library_add),
+                title: Text("Add Product"),
+              ),
+            ),
+          ],
+        );
+      }
       return UserAccountsDrawerHeader(
         accountName: Text(
           e.userName!,
@@ -73,6 +105,9 @@ class _HomeScreeenState extends State<HomeScreeen> {
   }
 
   Widget _buildMyDrawer() {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    List<UserModel> userModel = productprovider.userModelList;
+
     return Drawer(
       child: ListView(
         children: <Widget>[
@@ -302,6 +337,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
                             image: e.name,
                             price: e.price,
                             name: e.image,
+                            description: e.description,
                           ),
                         ),
                       );
@@ -321,6 +357,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
                           image: e.name,
                           price: e.price,
                           name: e.image,
+                          description: e.description,
                         ),
                       ),
                     );
@@ -352,7 +389,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const Text(
-                    "New Arrivels",
+                    "New Arrivals",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   GestureDetector(
@@ -360,7 +397,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                             builder: (ctx) => ListProduct(
-                                name: "New Achives",
+                                name: "New Arrivals",
                                 snapShot: newAchivesProduct)),
                       );
                     },
@@ -389,9 +426,11 @@ class _HomeScreeenState extends State<HomeScreeen> {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (ctx) => DetailScreen(
-                                      image: e.name,
-                                      price: e.price,
-                                      name: e.image),
+                                    image: e.name,
+                                    price: e.price,
+                                    name: e.image,
+                                    description: e.description,
+                                  ),
                                 ),
                               );
                             },
@@ -433,7 +472,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
     productprovider.getHomeFeatureData();
     productprovider.getHomeAchivesData();
     productprovider.getUserData();
-
+    //getStoreUser();
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
 
@@ -447,7 +486,7 @@ class _HomeScreeenState extends State<HomeScreeen> {
                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
           centerTitle: true,
           elevation: 0.0,
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.white,
           leading: IconButton(
             icon: const Icon(
               Icons.menu,
@@ -459,10 +498,10 @@ class _HomeScreeenState extends State<HomeScreeen> {
             },
           ),
           actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.search, color: Colors.black),
-              onPressed: () {},
-            ),
+            // IconButton(
+            //   icon: const Icon(Icons.search, color: Colors.black),
+            //   onPressed: () {},
+            // ),
             NotificationButton(),
           ],
         ),
