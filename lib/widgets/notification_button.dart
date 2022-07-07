@@ -38,7 +38,7 @@ class _NotificationButtonState extends State<NotificationButton> {
               child: ListBody(
                 children: [
                   Text(productProvider.notificationList.isNotEmpty
-                      ? "Your Product On Way"
+                      ? "Your Product is on its way"
                       : "No Notification"),
                 ],
               ),

@@ -1,46 +1,6 @@
-<<<<<<< Updated upstream
-import 'package:bestir/widgets/notification_button.dart';
-import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:typed_data';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
-  
-  Widget _buildSingleContainer({required String  startText,required String endText}){
-    return Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadiusDirectional.circular(20)
-              ),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                height: 55,
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadiusDirectional.circular(20)
-                ),
-                width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(startText,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                        ),
-                        ),
-                        Text(endText,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                        fontWeight: FontWeight.bold
-                        ),
-                        ),
-                  ],
-                ),
-              ),
-            );
-  }
-
-=======
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bestir/model/usermodel.dart';
 import 'package:bestir/screens/home/home.dart';
@@ -50,6 +10,7 @@ import 'package:bestir/widgets/notification_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -60,12 +21,30 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
+final TextEditingController email = TextEditingController();
+final TextEditingController userName = TextEditingController();
+final TextEditingController phoneNumber = TextEditingController();
+final TextEditingController password = TextEditingController();
+final TextEditingController address = TextEditingController();
+final TextEditingController userImage = TextEditingController();
+
+bool initialLabel = false;
+bool isMale = true;
+bool isLoading = false;
+
 class _ProfileScreenState extends State<ProfileScreen> {
+  late UserCredential result;
+
   late UserModel userModel;
-  late TextEditingController phoneNumber;
-  late TextEditingController address;
-  late TextEditingController userName;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late Uint8List bytes;
+  String img64 = "";
+  XFile? galleryFile;
+  late File imagePath = File('');
+  static late TextEditingController phoneNumber;
+  static late TextEditingController address;
+  static late TextEditingController userName;
+  static final GlobalKey<ScaffoldState> _scaffoldKey =
+      GlobalKey<ScaffoldState>();
   static String p =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
   RegExp regExp = new RegExp(p);
@@ -114,57 +93,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  Future<void> getImageGallery() async {
-    final _image =
-        await ImagePicker.platform.pickImage(source: ImageSource.gallery);
-    if (_image != null) {
-      setState(() {
-        _pickedImage = File(_image.path);
-      });
-    }
+  getImageGallery() async {
+    galleryFile = (await ImagePicker.platform.getImage(
+      source: ImageSource.gallery,
+    ));
+
+    imagePath = File(galleryFile!.path);
+
+    bytes = imagePath.readAsBytesSync();
+    img64 = base64Encode(bytes);
+    _pickedImage = File.fromRawPath(bytes);
+    setState(() {});
+    print(img64.toString());
   }
 
   late String userUid;
 
-  // Future<String> _uploadImage({File image}) async {
-  //   final storageRef =
-  //       FirebaseStorage.instance.ref().child("UserImage/$userUid");
-  //   UploadTask uploadTask = storageRef.putFile(image);
-  //   late String url;
-  //   uploadTask.whenComplete(() {
-  //     url = ref.getDownloadURL();
-  //   }).catchError((onError) {
-  //     print(onError);
-  //   });
-  //   return url;
+  _uploadImage() async {
+    User? myUser = FirebaseAuth.instance.currentUser;
 
-  //   FirebaseStorage storage = FirebaseStorage.instance;
-  //   Reference ref = storage.ref().child("image1" + DateTime.now().toString());
-  //   UploadTask uploadTask = ref.putFile(_image1);
-  //   uploadTask.then((res) {
-  //     res.ref.getDownloadURL();
-  //   });
-
-  //   StorageReference storageReference =
-  //       FirebaseStorage.instance.ref().child("UserImage/$userUid");
-  //   StorageUploadTask uploadTask = storageReference.putFile(image);
-  //   StorageTaskSnapshot snapshot = await uploadTask.onComplete;
-  //   String imageUrl = await snapshot.ref.getDownloadURL();
-  //   return imageUrl;
-  // }
-
-  _uploadImage(File image) async {
-    FirebaseStorage storage = FirebaseStorage.instance;
-    final storageRef =
-        FirebaseStorage.instance.ref().child("UserImage/$userUid");
-    late String url;
-    UploadTask uploadTask = storageRef.putFile(image);
-    uploadTask.whenComplete(() {
-      url = storageRef.getDownloadURL() as String;
-    }).catchError((onError) {
-      print(onError);
+    FirebaseFirestore.instance.collection("User").doc(myUser?.uid).update({
+      "userImage": img64.toString(),
+    }).then((_) {
+      print("success!");
     });
-    return url;
   }
 
   void getUserUid() {
@@ -180,9 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       centerCircle = true;
     });
-    _pickedImage != null
-        ? imageMap = await _uploadImage(_pickedImage)
-        : Container();
+    _pickedImage != null ? imageMap = await _uploadImage() : Container();
     FirebaseFirestore.instance.collection("Product").add({
       "UserName": userName.text,
       "UserGender": isMale == true ? "Male" : "Female",
@@ -234,10 +184,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   late String userImage;
   bool edit = false;
+
   Widget _buildContainerPart() {
-    address = TextEditingController(text: userModel.userAddress);
-    userName = TextEditingController(text: userModel.userName);
-    phoneNumber = TextEditingController(text: userModel.userPhoneNumber);
+    if (initialLabel == false) {
+      address = TextEditingController(text: userModel.userAddress);
+      userName = TextEditingController(text: userModel.userName);
+      phoneNumber = TextEditingController(text: userModel.userPhoneNumber);
+      initialLabel = true;
+    }
+
     if (userModel.userGender == "Male") {
       isMale = true;
     } else {
@@ -285,7 +240,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   ListTile(
                     leading: Icon(Icons.camera_alt),
-                    title: Text("Pick Form Camera"),
+                    title: Text("Pick from camera"),
                     onTap: () {
                       getImageCamera();
                       Navigator.of(context).pop();
@@ -293,7 +248,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   ListTile(
                     leading: Icon(Icons.photo_library),
-                    title: Text("Pick Form Gallery"),
+                    title: Text("Pick from gallery"),
                     onTap: () {
                       getImageGallery();
                       Navigator.of(context).pop();
@@ -307,14 +262,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildTextFormFliedPart() {
+    if (initialLabel == false) {
+      address = TextEditingController(text: userModel.userAddress);
+      userName = TextEditingController(text: userModel.userName);
+      phoneNumber = TextEditingController(text: userModel.userPhoneNumber);
+      initialLabel = true;
+    }
     return Container(
       height: double.infinity,
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          MyTextFormField(
-            name: "UserName",
+          TextFormField(
+            decoration: const InputDecoration(
+              labelText: "UserName",
+            ),
             controller: userName,
           ),
           _buildSingleContainer(
@@ -334,76 +297,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
               startText: "Gender",
             ),
           ),
-          MyTextFormField(
-            name: "Phone Number",
+          TextFormField(
+            decoration: const InputDecoration(
+              labelText: "Phone Number",
+            ),
             controller: phoneNumber,
           ),
-          MyTextFormField(
-            name: "Address",
+          TextFormField(
+            decoration: const InputDecoration(
+              labelText: "Address",
+            ),
             controller: address,
           ),
         ],
       ),
     );
   }
->>>>>>> Stashed changes
 
   @override
   Widget build(BuildContext context) {
     getUserUid();
     return Scaffold(
-<<<<<<< Updated upstream
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-          backgroundColor: Colors.grey,
-          actions: [
-            NotificationButton(),
-          ],
-      ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Container(
-              height: 150,
-              width: double.infinity,
-              color:Colors.lightBlueAccent,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children:const [
-                   CircleAvatar(
-                    maxRadius: 65,
-                    backgroundImage: AssetImage("assets/logouser.jpg"),
-                   ),
-                 ],
-              ),
-            ),
-            Container(
-                    height: 300,
-                    width: double.infinity,
-                    color: Colors.grey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                       _buildSingleContainer(startText: "Name", endText: "Tiago Ferreira"),
-                        _buildSingleContainer(startText: "Email", endText: "TiagoFerreira@gmail.com"),
-                          _buildSingleContainer(startText: "Phone Number", endText: "912345678"),
-                            _buildSingleContainer(startText: "Gender", endText: "Male")                    
-                      ],
-                    ),
-                  )
-          ],
-        ),
-      ),
-     
-
-        
-     
-
-=======
       resizeToAvoidBottomInset: true,
       key: _scaffoldKey,
       backgroundColor: Color(0xfff8f8f8),
@@ -466,6 +380,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         );
                       }
                       var myDoc = snapshot.data?.docs;
+
                       myDoc?.forEach((checkDocs) {
                         if ((checkDocs.data() as dynamic)["UserId"] ==
                             userUid) {
@@ -481,7 +396,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             userName: (checkDocs.data() as dynamic)["UserName"],
                             userPhoneNumber:
                                 (checkDocs.data() as dynamic)["UserNumber"],
-                                role: (checkDocs.data() as dynamic)["UserName"],
+                            role: (checkDocs.data() as dynamic)["role"],
                           );
                         }
                       });
@@ -502,17 +417,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     children: [
                                       CircleAvatar(
                                         maxRadius: 65,
-                                        // backgroundImage: _pickedImage = null
-                                        //     ? userModel.userImage == null
-                                        //         ? AssetImage(
-                                        //             "images/userImage.png")
-                                        //         : NetworkImage(
-                                        //             userModel.userImage)
-                                        //     : FileImage(_pickedImage)
+                                        // backgroundImage: MemoryImage(bytes)
                                       ),
                                     ],
                                   ),
                                 ),
+                                //EDITAR -----------------------------------------------------------------------------------------------
                                 edit == true
                                     ? Padding(
                                         padding: EdgeInsets.only(
@@ -549,6 +459,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Container(
                               height: 350,
+                              color: Colors.transparent,
                               width: double.infinity,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -564,6 +475,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                             Card(
+                              color: Color.fromARGB(255, 110, 201, 107),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30)),
                               child: Container(
@@ -590,7 +502,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           : Center(
               child: CircularProgressIndicator(),
             ),
->>>>>>> Stashed changes
     );
   }
 }

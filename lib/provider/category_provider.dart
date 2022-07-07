@@ -26,8 +26,8 @@ class CategoryProvider with ChangeNotifier {
         .get();
     shirtSnapShot.docs.forEach(
       (element) {
-        shirtData = Product(
-            element["image"], element["name"], element["price"].toDouble());
+        shirtData = Product(element["name"], element["image"],
+            element["price"].toDouble(), element["description"]);
         newList.add(shirtData);
       },
     );
@@ -49,8 +49,8 @@ class CategoryProvider with ChangeNotifier {
         .get();
     shirtSnapShot.docs.forEach(
       (element) {
-        shirtData = Product(
-            element["name"], element["image"], element["price"].toDouble());
+        shirtData = Product(element["name"], element["image"],
+            element["price"].toDouble(), element["description"]);
         newList.add(shirtData);
       },
     );
@@ -72,8 +72,8 @@ class CategoryProvider with ChangeNotifier {
         .get();
     shirtSnapShot.docs.forEach(
       (element) {
-        shirtData = Product(
-            element["name"], element["image"], element["price"].toDouble());
+        shirtData = Product(element["name"], element["image"],
+            element["price"].toDouble(), element["description"]);
         newList.add(shirtData);
       },
     );
@@ -95,8 +95,8 @@ class CategoryProvider with ChangeNotifier {
         .get();
     shirtSnapShot.docs.forEach(
       (element) {
-        shirtData = Product(
-            element["name"], element["image"], element["price"].toDouble());
+        shirtData = Product(element["name"], element["image"],
+            element["price"].toDouble(), element["description"]);
         newList.add(shirtData);
       },
     );
@@ -118,8 +118,8 @@ class CategoryProvider with ChangeNotifier {
         .get();
     shirtSnapShot.docs.forEach(
       (element) {
-        shirtData = Product(
-            element["name"], element["image"], element["price"].toDouble());
+        shirtData = Product(element["name"], element["image"],
+            element["price"].toDouble(), element["description"]);
         newList.add(shirtData);
       },
     );

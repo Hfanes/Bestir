@@ -47,8 +47,8 @@ class ProductProvider with ChangeNotifier {
               userEmail: (element.data() as dynamic)["UserEmail"],
               userGender: (element.data() as dynamic)["UserGender"],
               userName: (element.data() as dynamic)["UserName"],
-              userPhoneNumber: (element.data() as dynamic)["UserNumber"],
-              role:(element.data() as dynamic)["Role"] );
+              role: (element.data() as dynamic)["role"],
+              userPhoneNumber: (element.data() as dynamic)["UserNumber"]);
           newList.add(userModel);
         }
         userModelList = newList;
@@ -101,8 +101,8 @@ class ProductProvider with ChangeNotifier {
         .get();
     featureSnapShot.docs.forEach(
       (element) {
-        featureData = Product(
-            element["name"], element["image"], element["price"].toDouble());
+        featureData = Product(element["name"], element["image"],
+            element["price"].toDouble(), element["description"]);
         newList.add(featureData);
       },
     );
@@ -125,8 +125,8 @@ class ProductProvider with ChangeNotifier {
         await FirebaseFirestore.instance.collection("homefeature").get();
     featureSnapShot.docs.forEach(
       (element) {
-        featureData = Product(
-            element["name"], element["image"], element["price"].toDouble());
+        featureData = Product(element["name"], element["image"],
+            element["price"].toDouble(), element["description"]);
         newList.add(featureData);
       },
     );
@@ -146,8 +146,8 @@ class ProductProvider with ChangeNotifier {
         await FirebaseFirestore.instance.collection("homeachives").get();
     featureSnapShot.docs.forEach(
       (element) {
-        featureData = Product(
-            element["name"], element["image"], element["price"].toDouble());
+        featureData = Product(element["name"], element["image"],
+            element["price"].toDouble(), element["description"]);
         newList.add(featureData);
       },
     );
@@ -171,8 +171,8 @@ class ProductProvider with ChangeNotifier {
         .get();
     achivesSnapShot.docs.forEach(
       (element) {
-        featureData = Product(
-            element["name"], element["image"], element["price"].toDouble());
+        featureData = Product(element["name"], element["image"],
+            element["price"].toDouble(), element["description"]);
         newList.add(featureData);
       },
     );
@@ -193,32 +193,4 @@ class ProductProvider with ChangeNotifier {
   int get getNotificationIndex {
     return notificationList.length;
   }
-<<<<<<< Updated upstream
-
-    List<CartModel> CheckOutModelList=[];
-  late CartModel CheckOutModel;
-  void getCheckOutData({
-    required int quantity,
-   required double price,
-    required String name,
-    required String image,
-  }){
-    CheckOutModel=CartModel(
-      name, 
-      image, 
-      price, 
-      quantity);
-      CheckOutModelList.add(CheckOutModel);
-  }
-
-   List<CartModel> get getCheckOutModelList {
-    return List.from(CheckOutModelList);
-  }
-
-  int get getCheckOutModelListLength {
-    return CheckOutModelList.length;
-  }
 }
-=======
-}
->>>>>>> Stashed changes

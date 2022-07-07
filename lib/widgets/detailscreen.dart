@@ -15,7 +15,12 @@ class DetailScreen extends StatefulWidget {
   final String image;
   final String name;
   final double price;
-  DetailScreen({required this.image, required this.name, required this.price});
+  final String description;
+  DetailScreen(
+      {required this.image,
+      required this.name,
+      required this.price,
+      required this.description});
   @override
   _DetailScreenState createState() => _DetailScreenState();
 }
@@ -80,7 +85,7 @@ class _DetailScreenState extends State<DetailScreen> {
       child: Wrap(
         children: <Widget>[
           Text(
-            "Descrição aqui",
+            widget.description,
             style: TextStyle(fontSize: 16),
           )
         ],

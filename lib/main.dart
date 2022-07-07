@@ -1,9 +1,7 @@
 import 'package:bestir/provider/category_provider.dart';
 import 'package:bestir/provider/product_provider.dart';
-import 'package:bestir/screens/addProduct/addproduct.dart';
 import 'package:bestir/screens/home/home.dart';
 import 'package:bestir/screens/login/login.dart';
-import 'package:bestir/screens/profile/profilescreen.dart';
 import 'package:bestir/states/currentUser.dart';
 import 'package:bestir/utils/ourTheme.dart';
 import 'package:bestir/widgets/detailscreen.dart';
@@ -43,19 +41,9 @@ class MyApp extends StatelessWidget {
               builder: (ctx, snapshot) {
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
-<<<<<<< Updated upstream
-                  theme: ThemeData(iconTheme: IconThemeData(color: Colors.black)),
-                 home: snapshot.hasData ? HomeScreeen():OurLogin(),
-                  //home: ProfileScreen(),
-=======
                   theme:
                       ThemeData(iconTheme: IconThemeData(color: Colors.black)),
                   home: snapshot.hasData ? HomeScreeen() : Login(),
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
-                // home: AddProduct(),
->>>>>>> Stashed changes
                 );
               },
             ),

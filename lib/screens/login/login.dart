@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bestir/widgets/mybutton.dart';
+import 'package:bestir/screens/signup/signupStore.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -156,11 +157,21 @@ class _LoginState extends State<Login> {
                 ),
                 ChangeScreen(
                     name: "SignUp",
-                    whichAccount: "I Have Not Account!",
+                    whichAccount: "I don't have an account!",
                     onTap: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (ctx) => SignUp(),
+                        ),
+                      );
+                    }),
+                ChangeScreen(
+                    name: "SignUp Store",
+                    whichAccount: "Register Store!",
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (ctx) => SignUpStore(),
                         ),
                       );
                     }),

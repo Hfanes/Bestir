@@ -4,15 +4,6 @@ import 'package:bestir/widgets/singleproduct.dart';
 import 'package:flutter/material.dart';
 
 import 'detailscreen.dart';
-<<<<<<< Updated upstream
-
-class ListProduct extends StatelessWidget {
-    final String name;
-    List<Product> snapShot;
-     ListProduct({required this.name,required this.snapShot});
-
-=======
->>>>>>> Stashed changes
 
 class ListProduct extends StatelessWidget {
   final String name;
@@ -76,7 +67,7 @@ class ListProduct extends StatelessWidget {
                     //  mainAxisSpacing: 1,
                     //map(Closure: (dynamic) => SingleProduct))
                     children: snapShot.map((e) {
-                      return Expanded(
+                      return Container(
                         child: Row(
                           children: <Widget>[
                             Expanded(
@@ -88,6 +79,7 @@ class ListProduct extends StatelessWidget {
                                         image: e.name,
                                         price: e.price,
                                         name: e.image,
+                                        description: e.description,
                                       ),
                                     ),
                                   );
@@ -98,77 +90,6 @@ class ListProduct extends StatelessWidget {
                                   name: e.image,
                                 ),
                               ),
-<<<<<<< Updated upstream
-                             const SizedBox(
-                               height: 10,
-                               ),
-                         Container(
-                           height: 600,
-                           child: GridView.count(
-                              scrollDirection: Axis.vertical,
-                              crossAxisCount:2 ,
-                              childAspectRatio: 0.9,
-                            //  crossAxisSpacing: 1,
-                            //  mainAxisSpacing: 1,
-                            //map(Closure: (dynamic) => SingleProduct))
-                           children: snapShot.map((e) {
-          return Container(
-            child: Row(
-              children: <Widget>[
-                  Expanded(
-                    child: 
-                    GestureDetector(
-                            onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (ctx) => DetailScreen(
-                            image: e.name,
-                             price: e.price,
-                              name:e.image,
-                              ),
-                      ),
-                    );
-                                  },
-                                  child: SingleProduct(
-                             image: e.name,
-                             price: e.price,
-                              name:e.image,
-                              ),
-                                ),
-                  ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (ctx) => DetailScreen(
-                          image: e.name, 
-                           price: e.price, 
-                           name: e.image,
-                           ),
-                    ),
-                  );
-                },
-                child: SingleProduct(
-                    image: e.name, 
-                    price: e.price, 
-                    name: e.image,
-                    ),
-              ),
-              ],
-            ),
-          );
-        }).toList(),
-                          //  => SingleProduct(
-                          //    image: e.name,
-                          //     price: e.price, 
-                          //     name: e.image
-                          //       ),
-                              
-                           ),
-                         )
-                      ],
-                     ),
-=======
                             ),
                             GestureDetector(
                               onTap: () {
@@ -178,6 +99,7 @@ class ListProduct extends StatelessWidget {
                                       image: e.name,
                                       price: e.price,
                                       name: e.image,
+                                      description: e.description,
                                     ),
                                   ),
                                 );
@@ -201,7 +123,6 @@ class ListProduct extends StatelessWidget {
                 )
               ],
             ),
->>>>>>> Stashed changes
           ],
         ),
       ),
