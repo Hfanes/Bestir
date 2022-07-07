@@ -73,7 +73,8 @@ class _SignUpState extends State<SignUp> {
       "UserAddress": address.text,
       "UserGender": isMale == true ? "Male" : "Female",
       "UserNumber": phoneNumber.text,
-      "userImage": ""
+      "userImage": "",
+      
     });
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (ctx) => HomeScreeen()));

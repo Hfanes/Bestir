@@ -481,6 +481,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             userName: (checkDocs.data() as dynamic)["UserName"],
                             userPhoneNumber:
                                 (checkDocs.data() as dynamic)["UserNumber"],
+                                role: (checkDocs.data() as dynamic)["UserName"],
                           );
                         }
                       });

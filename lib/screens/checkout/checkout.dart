@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bestir/model/cartmodel.dart';
-
 import 'package:bestir/provider/product_provider.dart';
 import 'package:bestir/screens/home/home.dart';
 import 'package:bestir/widgets/checkout_singleproduct.dart';

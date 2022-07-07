@@ -1,5 +1,6 @@
 import 'package:bestir/provider/category_provider.dart';
 import 'package:bestir/screens/about/about.dart';
+import 'package:bestir/screens/addProduct/addproduct.dart';
 import 'package:bestir/screens/checkout/checkout.dart';
 import 'package:bestir/screens/profile/profilescreen.dart';
 import 'package:bestir/widgets/detailscreen.dart';
@@ -54,10 +55,40 @@ class _HomeScreeenState extends State<HomeScreeen> {
     );
   }
 
+
+
+ 
+
   Widget _buildUserAccountsDrawerHeader() {
     List<UserModel> userModel = productprovider.userModelList;
     return Column(
         children: userModel.map((e) {
+           if(e.role!="store"){
+            return Column(
+              children: [  UserAccountsDrawerHeader(
+            accountName: Text(
+          e.userName!,
+          style: TextStyle(color: Colors.black),
+        ),
+        currentAccountPicture: CircleAvatar(
+            backgroundColor: Colors.white,
+            backgroundImage: AssetImage("assets/userImage.png")),
+        decoration: BoxDecoration(color: Color(0xfff2f2f2)),
+        accountEmail: Text(e.userEmail!, style: TextStyle(color: Colors.black)),
+      ),     
+                Container(
+                child:ListTile(
+                onTap: () {
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (ctx) => AddProduct()));
+                },
+                leading: Icon(Icons.shopping_basket_outlined),
+                title: Text("Home"),
+          ),
+          ),
+              ],
+            );
+      }
       return UserAccountsDrawerHeader(
         accountName: Text(
           e.userName!,
@@ -69,7 +100,8 @@ class _HomeScreeenState extends State<HomeScreeen> {
         decoration: BoxDecoration(color: Color(0xfff2f2f2)),
         accountEmail: Text(e.userEmail!, style: TextStyle(color: Colors.black)),
       );
-    }).toList());
+    }
+    ).toList());
   }
 
   Widget _buildMyDrawer() {

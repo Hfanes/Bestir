@@ -6,9 +6,11 @@ class UserModel {
       userGender,
       userPhoneNumber,
       userImage,
-      userAddress;
+      userAddress,
+      role;
   UserModel(
-      {required this.userEmail,
+      {required this.role,
+      required this.userEmail,
       required this.userImage,
       required this.userAddress,
       required this.userGender,

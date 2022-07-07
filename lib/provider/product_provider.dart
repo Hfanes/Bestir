@@ -47,7 +47,8 @@ class ProductProvider with ChangeNotifier {
               userEmail: (element.data() as dynamic)["UserEmail"],
               userGender: (element.data() as dynamic)["UserGender"],
               userName: (element.data() as dynamic)["UserName"],
-              userPhoneNumber: (element.data() as dynamic)["UserNumber"]);
+              userPhoneNumber: (element.data() as dynamic)["UserNumber"],
+              role:(element.data() as dynamic)["Role"] );
           newList.add(userModel);
         }
         userModelList = newList;
