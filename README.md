@@ -2,5 +2,5 @@
 
 Clothing store
 
-Technologies 
+Technologies <br/>
 Flutter | Firebase |
